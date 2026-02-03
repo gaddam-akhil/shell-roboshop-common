@@ -1,6 +1,6 @@
 #!/bin/bash
 
-APP_NAME=redis
+APP_NAME=mysql
 source ./common.sh
 
 check_root
