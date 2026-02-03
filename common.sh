@@ -99,6 +99,17 @@ mv target/$APP_NAME-1.0.jar $APP_NAME.jar  &>>$LOGS_FILES
 VALIDATE $? "RENAMING"
 }
 
+python_setup(){
+    dnf install python3 gcc python3-devel -y
+VALIDATE $? "installing Python-devel"
+
+cd /app &>>$LOGS_FILES
+VALIDATE $? "Moving to app dir"
+
+pip3 install -r requirements.txt &>>$LOGS_FILES
+VALIDATE $? "Installing Build app"
+}
+
 app_restart(){
     systemctl restart $APP_NAME &>>$LOGS_FILES
 VALIDATE $? "restarting $APP_NAME"
