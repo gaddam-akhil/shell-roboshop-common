@@ -9,6 +9,9 @@ nodejs_setup
 systemd_setup
 
 #this is mongodb calling
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILES
+VALIDATE $? "setuping mongo repo"
+
 dnf install mongodb-mongosh -y &>>$LOGS_FILES
 VALIDATE $? "installing mongodb client server"
 
