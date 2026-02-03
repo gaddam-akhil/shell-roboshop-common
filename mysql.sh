@@ -17,5 +17,4 @@ VALIDATE $? "ENABLE AND START MYSQL"
 mysql_secure_installation --set-root-pass RoboShop@1 &>>$LOGS_FILES
 VALIDATE $? "CHANGING PASWORD"
 
-app_restart
 print_total_time
