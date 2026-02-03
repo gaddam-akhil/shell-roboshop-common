@@ -10,6 +10,7 @@ N="\e[0m"
 SCRIPT_DIR=$PWD
 MONGODB_HOST=mongodb.gaddam.online
 START_TIME=$(date +%s)
+MYSQL_HOST=mysql.gaddam.online
 
 mkdir -p $LOGS_FOLDER
 
@@ -81,6 +82,21 @@ systemctl daemon-reload &>>$LOGS_FILES
 systemctl enable $APP_NAME &>>$LOGS_FILES
 systemctl start $APP_NAME &>>$LOGS_FILES
 VALIDATE $? "Enabling and Starting" $APP_NAME
+}
+
+java_setup(){
+
+    dnf install maven -y
+VALIDATE $? "Installing Maven"
+
+cd /app 
+VALIDATE $? "MOVING TO APP DIR"
+
+mvn clean package &>>$LOGS_FILES
+VALIDATE $? "installing dependancies and building $APP_NAME"
+
+mv target/$APP_NAME-1.0.jar $APP_NAME.jar  &>>$LOGS_FILES
+VALIDATE $? "RENAMING"
 }
 
 app_restart(){
