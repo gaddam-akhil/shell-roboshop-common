@@ -11,6 +11,8 @@ SCRIPT_DIR=$PWD
 MONGODB_HOST=mongodb.gaddam.online
 START_TIME=$(date +%s)
 
+mkdir -p $LOGS_FOLDER
+
 echo "$(date "+%y-%m-%d %H:%M:%S") | script started executing at: $(date)" | tee -a $LOGS_FILES
 
 check_root() {
@@ -20,7 +22,6 @@ if [ $USER_ID -ne 0 ]; then
 fi
 }
 
-mkdir -p $LOGS_FOLDER
 
 VALIDATE() {
  if [ $1 -ne 0 ]; then

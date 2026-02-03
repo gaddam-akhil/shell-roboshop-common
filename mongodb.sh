@@ -22,4 +22,4 @@ VALIDATE $? "allowing remote connection"
 systemctl restart mongod &>>$LOGS_FILES
 VALIDATE $? "restart mongodb"
 
-print_total_time()
+print_total_time
