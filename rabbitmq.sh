@@ -5,7 +5,7 @@ source ./common.sh
 
 check_root
 
-cp $APP_NAME.repo  /etc/yum.repos.d/$APP_NAME.repo
+cp $SCRIPT_DIR/$APP_NAME.repo  /etc/yum.repos.d/$APP_NAME.repo
 VALIDATE $? "ADDING REPO FILE"
 
 dnf install $APP_NAME-server -y &>>$LOGS_FILES
