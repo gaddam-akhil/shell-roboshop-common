@@ -2,12 +2,11 @@
 
 APP_NAME=mysql
 source ./common.sh
-
 check_root
 
 
 
-dnf install mysql-server -y &>>$LOGS_FILES
+dnf install mysql-server -y 
 VALIDATE $? "Installing mysql"
 
 systemctl enable mysqld &>>$LOGS_FILES
