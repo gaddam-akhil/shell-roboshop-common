@@ -16,7 +16,7 @@ mkdir -p $LOGS_FOLDER
 
 echo "$(date "+%y-%m-%d %H:%M:%S") | script started executing at: $(date)" | tee -a $LOGS_FILES
 
-check_root() {
+check_root(){
 if [ $USER_ID -ne 0 ]; then
  echo -e "$R please run this script as root user access $N" | tee -a $LOGS_FILES
  exit 1
@@ -24,7 +24,7 @@ fi
 }
 
 
-VALIDATE() {
+VALIDATE(){
  if [ $1 -ne 0 ]; then
    echo -e "$(date "+%y-%m-%d %H:%M:%S") | $2 .... $R FAILURE $N" | tee -a $LOGS_FILES
    exit 1
@@ -36,7 +36,7 @@ VALIDATE() {
 
 nodejs_setup(){
     dnf module disable nodejs -y &>>$LOGS_FILES
-VALIDATE $? "module disabling"
+VALIDATE $? "Disabling Nodejs Default version"
 
 dnf module enable nodejs:20 -y &>>$LOGS_FILES
 VALIDATE $? "enable nodejs:20"
@@ -44,11 +44,13 @@ VALIDATE $? "enable nodejs:20"
 dnf install nodejs -y &>>$LOGS_FILES
 VALIDATE $? "installing nodejs"
 
-dnf install nodejs -y &>>$LOGS_FILES
-VALIDATE $? "installing nodejs"
+npm install  &>>$LOGS_FILES
+VALIDATE $? "Installing dependencies"
 }
 
 app_setup(){ 
+
+#creating system user
 
 id roboshop &>>$LOGS_FILES
 if [ $? -ne 0 ]; then
@@ -57,6 +59,8 @@ if [ $? -ne 0 ]; then
 else 
    echo -e "Roboshope user already exit.....$Y skipping $N" 
 fi
+
+#downloading the app dir
 
 mkdir -p /app &>>$LOGS_FILES
 VALIDATE $? "creating a app directory"
@@ -81,12 +85,12 @@ VALIDATE $? "created systemctl service"
 systemctl daemon-reload &>>$LOGS_FILES
 systemctl enable $APP_NAME &>>$LOGS_FILES
 systemctl start $APP_NAME &>>$LOGS_FILES
-VALIDATE $? "Enabling and Starting" $APP_NAME
+VALIDATE $? "Enabling and Starting $APP_NAME"
 }
 
 java_setup(){
 
-    dnf install maven -y
+    dnf install maven -y &>>$LOGS_FILES
 VALIDATE $? "Installing Maven"
 
 cd /app 
@@ -100,7 +104,7 @@ VALIDATE $? "RENAMING"
 }
 
 python_setup(){
-    dnf install python3 gcc python3-devel -y
+    dnf install python3 gcc python3-devel -y &>>$LOGS_FILES
 VALIDATE $? "installing Python-devel"
 
 cd /app &>>$LOGS_FILES
@@ -114,6 +118,7 @@ app_restart(){
     systemctl restart $APP_NAME &>>$LOGS_FILES
 VALIDATE $? "restarting $APP_NAME"
 }
+
 print_total_time(){
      END_TIME=$(date +%s)
      TOTAL_TIME=$(( $END_TIME - $START_TIME ))
