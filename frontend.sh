@@ -22,7 +22,7 @@ VALIDATE $? "ENABLE AND START NGINX"
 rm -rf /usr/share/nginx/html/* 
 VALIDATE $? "removing default file"
 
-curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>$LOGS_FILES
 VALIDATE $? "downloading frontend code"
 
 cd /usr/share/nginx/html &>>$LOGS_FILES
@@ -34,7 +34,7 @@ VALIDATE $? "Unzipping frontend file"
 rm -rf /etc/nginx/nginx.conf
 
 cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf
-VALIDATE $? "coping our nginx file"
+VALIDATE $? "coping our nginx conf file"
 
 systemctl restart nginx &>>$LOGS_FILES
 VALIDATE $? "restarting nginx"
