@@ -4,7 +4,7 @@ source ./common.sh
 
 check_root
 
-cp mongo.repo  /etc/yum.repos.d/mongo.repo
+cp $SCRIPT_DIR/mongo.repo  /etc/yum.repos.d/mongo.repo
 VALIDATE $? "coping mongo repo"
 
 dnf install mongodb-org -y &>>$LOGS_FILES
