@@ -12,7 +12,7 @@ dnf module disable nginx -y &>>$LOGS_FILES
 dnf module enable nginx:1.24 -y &>>$LOGS_FILES
 VALIDATE "ENABLE NGINX MODULE"
 
-dnf install nginx -y
+dnf install nginx -y &>>$LOGS_FILES
 VALIDATE $? "installing nginx"
 
 systemctl enable nginx &>>$LOGS_FILES
