@@ -17,10 +17,10 @@ VALIDATE $? "installing mongodb client server"
 
 INDEX=$(mongosh --host $MONGODB_HOST --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")') &>>$LOGS_FILES
 if [ $INDEX -le 0 ]; then
-mongosh --host $MONGODB_HOST </app/db/master-data.js
-VALIDATE $? "Loadin products"
+    mongosh --host $MONGODB_HOST </app/db/master-data.js
+    VALIDATE $? "Loadin products"
 else
-echo -e "$(date "+%y-%m-%d %H:%M:%S") | products already loaded....$Y skipping $N"
+    echo -e "$(date "+%y-%m-%d %H:%M:%S") | products already loaded....$Y skipping $N"
 fi
 
 systemctl enable catalogue &>>$LOGS_FILES
