@@ -8,7 +8,7 @@ app_setup
 nodejs_setup
 systemd_setup
 
-#this is mongodb calling
+#loading data into mongodb
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGS_FILES
 VALIDATE $? "setuping mongo repo"
 
