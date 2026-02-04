@@ -23,5 +23,6 @@ else
 echo -e "$(date "+%y-%m-%d %H:%M:%S") | products already loaded....$Y skipping $N"
 fi
 
-systemctl restart catalogue &>>$LOGS_FILES
+systemctl enable catalogue &>>$LOGS_FILES
+systemctl start catalogue &>>$LOGS_FILES
 VALIDATE $? "restarting catalogue"
